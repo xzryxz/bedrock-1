@@ -8,7 +8,7 @@
 {% block body_id %}organizations-faq{% endblock %}
 
 {% block site_header_logo %}
-<h1><a href="{{ url('firefox.organizations.organizations') }}"><img src="{{ media('img/firefox/organizations/title.png?2013-06') }}" alt="Firefox ESR" height="68" width="299"></a></h1>
+<h1><a href="{{ url('firefox.organizations.organizations') }}"><img src="{{ static('img/firefox/organizations/title.png') }}?2013-06" alt="Firefox ESR" height="68" width="299"></a></h1>
 {% endblock %}
 
 {% block main_feature %}
@@ -27,7 +27,7 @@
 <h4>What does the Mozilla Firefox ESR life cycle look like?</h4>
 <p>Releases will be maintained for approximately one year, with point releases containing security updates coinciding with regular Firefox releases. The ESR will also have a two cycle (12 week) overlap between the time of a new release and the end-of-life of the previous release to permit testing and certification prior to deploying a new version.</p>
 
-<p><img src="{{ media('/img/firefox/organizations/release-overview.png') }}" alt="Firefox ESR Release Overview" id="release-overview" /></p>
+<p><img src="{{ static('img/firefox/organizations/release-overview.png') }}" alt="Firefox ESR Release Overview" id="release-overview" /></p>
 
 <p>Maintenance of each ESR, through point releases, is limited to high-risk/high-impact security vulnerabilities and in rare cases may also include off-schedule releases that address live security vulnerabilities. Backports of any functional enhancements and/or stability fixes are not in scope.</p>
 

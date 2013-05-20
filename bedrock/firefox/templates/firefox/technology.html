@@ -62,7 +62,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-style-editor.png') }}" alt="Style Editor screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-style-editor.png') }}" alt="Style Editor screenshot" />
     </div>
     <h1>Style Editor</h1>
     <p>The Style Editor makes it easy to experiment with, revise and test changes to the appearance of Web pages. Edit the design of any page and see your changes instantly as you modify the stylesheet. Try it out from the Web Developer menu.</p>
@@ -70,7 +70,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-debugger.png') }}" alt="Debugger screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-debugger.png') }}" alt="Debugger screenshot" />
     </div>
     <h1>Debugger</h1>
     <p>Quickly hunt down problems in your JavaScript code as you pause, play and watch script execution by setting breakpoints in the source editor. All of the scripts are listed in a menu and you can jump to a file by typing part of its name. It also supports remote debugging for Firefox OS and Firefox for Android.</p>
@@ -78,7 +78,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-mobile.png?2013-06') }}" alt="Mobile developer tools screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-mobile.png') }}?2013-06" alt="Mobile developer tools screenshot" />
     </div>
     <h1>Mobile developer tools</h1>
     <p>Our Responsive Design View tool makes it easy to resize the page you’re viewing to see what it would look like on any screen, all from the comfort of your desktop. You can also troubleshoot JavaScript running on your mobile with the Debugger. Connect to Firefox for Android or Firefox OS and use your desktop monitor to debug your mobile device.</p>
@@ -86,7 +86,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-developer-toolbar.png?2013-06') }}" alt="Developer Toolbar screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-developer-toolbar.png') }}?2013-06" alt="Developer Toolbar screenshot" />
     </div>
     <h1>Developer Toolbar</h1>
     <p>Fast, easy and intuitive, the Developer Toolbar saves you time when working on Web development. It provides easy keyboard control over a variety of tools and automatically completes commands and parameters as you type. Find it in the Web Developer menu or hit shift+F2.</p>
@@ -94,7 +94,7 @@
 
 <article class="hasdemo">
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-console.png?2013-06') }}" alt="Web Console screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-console.png') }}?2013-06" alt="Web Console screenshot" />
     </div>
     <h1>Web Console</h1>
     <p>Watch the events occurring within your Web pages. Web Console lets you see logging messages from your JavaScript code, JavaScript and CSS errors and network activity. Search and filter to find just the events you need to look at. Plus, you can directly interact with and explore your page via JavaScript.</p>
@@ -103,7 +103,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-inspector.png') }}" alt="Page Inspector screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-inspector.png') }}" alt="Page Inspector screenshot" />
     </div>
     <h1>Page Inspector</h1>
     <p>Peek right into the styling of any Web page by visually selecting the page element that you’re interested in. Simply right-click on any part of the page and select “Inspect Element;” choose Inspect from the Web Developer menu; or use the handy ctrl-shift-I (cmd-shift-I on Mac) keyboard shortcut. (Try it out on this very page!)</p>
@@ -112,7 +112,7 @@
 
 <article>
     <div class="demo">
-        <img src="{{ media('img/firefox/technology/tools-scratchpad.png') }}" alt="Scratchpad screenshot" />
+        <img src="{{ static('img/firefox/technology/tools-scratchpad.png') }}" alt="Scratchpad screenshot" />
     </div>
     <h1>Scratchpad</h1>
     <p>The browser is a fantastic place to experiment with JavaScript and Scratchpad lets you write code that can interact directly with the contents of a Web page. Scratchpad makes it easy to experiment with your ideas and then copy the results into your usual website development tools. It’s also fun for tinkering on top of pages.</p>
@@ -377,9 +377,9 @@
 
 <article id="webgldemo" class="hasademo experimental xxxie">
     <h1>WebGL</h1>
-    <script src="{{ media('js/firefox/technology/sylvester.js') }}"></script>
-    <script src="{{ media('js/firefox/technology/glUtils.js') }}"></script>
-    <script src="{{ media('js/firefox/technology/gldemo.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/sylvester.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/glUtils.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/gldemo.js') }}"></script>
     <div class="demo">
         <canvas onmouseout="stopTeaPot()" onmouseover="startTeaPot()" height="200" width="300"></canvas>
     </div>
@@ -438,17 +438,17 @@
 
 <article id="audiodemo" class="hasademo experimental xxxie">
     <!--[if gte IE 9]>-->
-    <script src="{{ media('js/firefox/technology/processing.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/processing.js') }}"></script>
     <!--<![endif]-->
 
-    <script src="{{ media('js/firefox/technology/beatdetektor.js') }}"></script>
-    <script src="{{ media('js/firefox/technology/dsp.js') }}"></script>
-    <script src="{{ media('js/firefox/technology/main.js') }}"></script>
-    <audio id="grappes" src="{{ media('img/firefox/technology/track.ogg') }}" preload="auto"></audio>
+    <script src="{{ static('js/firefox/technology/beatdetektor.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/dsp.js') }}"></script>
+    <script src="{{ static('js/firefox/technology/main.js') }}"></script>
+    <audio id="grappes" src="{{ static('img/firefox/technology/track.ogg') }}" preload="auto"></audio>
 
     <h1>Audio Sampling and Generation API</h1>
     <div class="demo">
-        <canvas onmouseout="stopProcessingAudio()" onmouseover="startProcessingAudio()" id="audiocube" data-processing-sources="{{ media('js/firefox/technology/anim.pde') }}" style="image-rendering: optimizespeed ! important;" width="128" height="128"></canvas>
+        <canvas onmouseout="stopProcessingAudio()" onmouseover="startProcessingAudio()" id="audiocube" data-processing-sources="{{ static('js/firefox/technology/anim.pde') }}" style="image-rendering: optimizespeed ! important;" width="128" height="128"></canvas>
     </div>
     <p>The Firefox Audio Data API allows developers to read, modify and write data from audio and video elements.</p>
     <a class="learn" title="documentation" href="https://developer.mozilla.org/en/Introducing_the_Audio_API_Extension">learn more</a>
@@ -474,7 +474,7 @@
 <article>
     <h1>SVG As Images and CSS Backgrounds</h1>
     <p>SVG can now be used <a href="https://developer.mozilla.org/en/HTML/element/img#Supported_Image_Formats">in &lt;img&gt; tags</a> as well as <a href="https://developer.mozilla.org/en/CSS/background-image#Syntax">background images in CSS</a>. SMIL animations are also supported.</p>
-    <img src="{{ media('img/firefox/technology/lion.svg') }}" alt="Lion SVG image example">
+    <img src="{{ static('img/firefox/technology/lion.svg') }}" alt="Lion SVG image example">
     <a class="learn" title="documentation" href="https://developer.mozilla.org/en/CSS/background-image#Syntax">learn more</a>
 </article>
 

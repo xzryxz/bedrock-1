@@ -78,7 +78,7 @@ class TestTemplateLangFiles(TestCase):
         template = env.get_template('some_lang_files.html')
         # make a dummy object capable of having arbitrary attrs assigned
         request = type('request', (), {})()
-        template.render({'request':request})
+        template.render({'request': request})
         eq_(request.langfiles, ['dude', 'walter',
                                 'main', 'download_button', 'newsletter'])
 

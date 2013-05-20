@@ -20,7 +20,7 @@
 
 {% block extrahead %}
   {{ css('collusion') }}
-  <script src="{{ media('js/collusion/d3.js') }}"></script>
+  <script src="{{ static('js/collusion/d3.js') }}"></script>
 {% endblock %}
 
 {% block js  %}
@@ -52,7 +52,7 @@ $(window).ready(function() {
   $("#domain-infos").hide();
 
   // get list of known trackers from trackers.json file hosted on website:
-  jQuery.getJSON("{{ MEDIA_URL }}js/collusion/trackers.json", function(trackers) {
+  jQuery.getJSON("{{ static('js/collusion/trackers.json') }}", function(trackers) {
     var runner = GraphRunner.Runner({
       width: 640,
       height: 480,

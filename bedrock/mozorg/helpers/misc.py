@@ -2,19 +2,18 @@ import urlparse
 from os import path
 
 from django.conf import settings
+from django.contrib.staticfiles.finders import find as static_find
 
 import jingo
 import jinja2
-from funfactory.settings_base import path as base_path
+
+from funfactory.helpers import static
 from funfactory.urlresolvers import reverse
-
-
-L10N_IMG_PATH = base_path('media', 'img', 'l10n')
 
 
 def _l10n_media_exists(locale, url):
     """ checks if a localized media file exists for the locale """
-    return path.exists(path.join(L10N_IMG_PATH, locale, url))
+    return static_find(path.join('img', 'l10n', locale, url))
 
 
 @jingo.register.function
@@ -79,11 +78,11 @@ def img_l10n(ctx, url):
 
     For en-US this would output:
 
-        {{ MEDIA_URL }}img/l10n/en-US/firefox/screenshot.png
+        {{ STATIC_URL }}img/l10n/en-US/firefox/screenshot.png
 
     For fr this would output:
 
-        {{ MEDIA_URL }}img/l10n/fr/firefox/screenshot.png
+        {{ STATIC_URL }}img/l10n/fr/firefox/screenshot.png
 
     If that file did not exist it would default to the en-US version (if en-US
     was the default language for this install).
@@ -93,8 +92,8 @@ def img_l10n(ctx, url):
 
     Put files in folders like the following::
 
-        $ROOT/media/img/l10n/en-US/firefoxos/screenshot.png
-        $ROOT/media/img/l10n/fr/firefoxos/screenshot.png
+        $ROOT/static_src/img/l10n/en-US/firefoxos/screenshot.png
+        $ROOT/static_src/img/l10n/fr/firefoxos/screenshot.png
 
     """
     url = url.lstrip('/')
@@ -110,7 +109,7 @@ def img_l10n(ctx, url):
         if not _l10n_media_exists(locale, url):
             locale = settings.LANGUAGE_CODE
 
-    return path.join(settings.MEDIA_URL, 'img', 'l10n', locale, url)
+    return static(path.join('img', 'l10n', locale, url))
 
 
 @jingo.register.function
@@ -123,7 +122,7 @@ def field_with_attrs(bfield, **kwargs):
 
 @jingo.register.function
 def platform_img(url, optional_attributes=None):
-    url = path.join(settings.MEDIA_URL, url.lstrip('/'))
+    url = path.join(settings.STATIC_URL, url.lstrip('/'))
     if optional_attributes:
         attrs = ' '.join('%s="%s"' % (attr, val)
                          for attr, val in optional_attributes.items())
@@ -148,7 +147,7 @@ def high_res_img(url, optional_attributes=None):
     else:
         attrs = ''
 
-    url = media(url)
+    url = static(url)
 
     # Don't download any image until the javascript sets it based on
     # data-src so we can do high-dpi detection. If no js, show the

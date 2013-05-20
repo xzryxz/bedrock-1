@@ -6,6 +6,7 @@ import json
 import re
 
 from django.conf import settings
+from django.contrib.staticfiles.finders import find as static_find
 from django.http import (HttpResponsePermanentRedirect,
                          HttpResponseRedirect)
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -73,7 +74,7 @@ def get_js_bundle_files(bundle):
         if bundle_full in BUNDLE_HASHES:
             build_id = BUNDLE_HASHES[bundle_full]
         items = ("js/%s-min.js?build=%s" % (bundle, build_id,),)
-    return json.dumps([settings.MEDIA_URL + i for i in items])
+    return json.dumps([settings.STATIC_URL + i for i in items])
 
 
 JS_COMMON = get_js_bundle_files('partners_common')
@@ -143,7 +144,7 @@ def fx_home_redirect(request):
 
 
 def platforms(request):
-    file = settings.MEDIA_ROOT + '/devices.csv'
+    file = static_find('devices.csv')
     return l10n_utils.render(request, 'firefox/mobile/platforms.html',
                              {'devices': load_devices(request, file)})
 

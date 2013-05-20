@@ -11,17 +11,18 @@ import jingo
 import jinja2
 from nose.tools import assert_false, eq_, ok_
 from pyquery import PyQuery as pq
-from bedrock.newsletter.tests.test_views import newsletters
+from funfactory.helpers import static
 from funfactory.urlresolvers import reverse
 
 from bedrock.mozorg.helpers.misc import platform_img
 from bedrock.mozorg.helpers.misc import high_res_img
 from bedrock.mozorg.tests import TestCase
+from bedrock.newsletter.tests.test_views import newsletters
 
 
 TEST_FILES_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                'test_files')
-TEST_L10N_IMG_PATH = os.path.join(TEST_FILES_ROOT, 'media', 'img', 'l10n')
+TEST_L10N_IMG_PATH = os.path.join(TEST_FILES_ROOT, 'static_src')
 
 
 # Where should this function go?
@@ -61,8 +62,8 @@ class TestSecureURL(TestCase):
         self._test('', 'https://' + self.host + self.test_path, True)
 
 
-@patch('bedrock.mozorg.helpers.misc.L10N_IMG_PATH', TEST_L10N_IMG_PATH)
 @patch('django.conf.settings.LANGUAGE_CODE', 'en-US')
+@patch('django.conf.settings.STATICFILES_DIRS', (TEST_L10N_IMG_PATH,))
 class TestImgL10n(TestCase):
     rf = RequestFactory()
 
@@ -75,44 +76,44 @@ class TestImgL10n(TestCase):
     def test_works_for_default_lang(self):
         """Should output correct path for default lang always."""
         eq_(self._render('en-US', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/en-US/dino/head.png')
+            static('img/l10n/en-US/dino/head.png'))
 
         eq_(self._render('en-US', 'dino/does-not-exist.png'),
-            settings.MEDIA_URL + 'img/l10n/en-US/dino/does-not-exist.png')
+            static('img/l10n/en-US/dino/does-not-exist.png'))
 
     def test_works_for_other_lang(self):
         """Should use the request lang if file exists."""
         eq_(self._render('de', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/de/dino/head.png')
+            static('img/l10n/de/dino/head.png'))
 
     def test_defaults_when_lang_file_missing(self):
         """Should use default lang when file doesn't exist for lang."""
         eq_(self._render('is', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/en-US/dino/head.png')
+            static('img/l10n/en-US/dino/head.png'))
 
     def test_latam_spanishes_fallback_to_european_spanish(self):
         """Should use es-ES image when file doesn't exist for lang."""
         eq_(self._render('es-AR', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/es-ES/dino/head.png')
+            static('img/l10n/es-ES/dino/head.png'))
         eq_(self._render('es-CL', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/es-ES/dino/head.png')
+            static('img/l10n/es-ES/dino/head.png'))
         eq_(self._render('es-MX', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/es-ES/dino/head.png')
+            static('img/l10n/es-ES/dino/head.png'))
         eq_(self._render('es', 'dino/head.png'),
-            settings.MEDIA_URL + 'img/l10n/es-ES/dino/head.png')
+            static('img/l10n/es-ES/dino/head.png'))
 
-    @patch('bedrock.mozorg.helpers.misc.path.exists')
+    @patch('bedrock.mozorg.helpers.misc.static_find')
     def test_file_not_checked_for_default_lang(self, exists_mock):
         """
         Should not check filesystem for default lang, but should for others.
         """
         eq_(self._render('en-US', 'dino/does-not-exist.png'),
-            settings.MEDIA_URL + 'img/l10n/en-US/dino/does-not-exist.png')
+            static('img/l10n/en-US/dino/does-not-exist.png'))
         ok_(not exists_mock.called)
 
         self._render('is', 'dino/does-not-exist.png')
-        exists_mock.assert_called_once_with(os.path.join(
-            TEST_L10N_IMG_PATH, 'is', 'dino', 'does-not-exist.png'))
+        exists_mock.assert_called_once_with(
+            'img/l10n/is/dino/does-not-exist.png')
 
 
 class TestVideoTag(TestCase):
@@ -249,7 +250,7 @@ class TestNewsletterFunction(TestCase):
 
 
 class TestPlatformImg(TestCase):
-    @override_settings(MEDIA_URL='/media/')
+    @override_settings(STATIC_URL='/media/')
     def test_platform_img_no_optional_attributes(self):
         """Should return expected markup without optional attributes"""
         markup = platform_img('test.png')
@@ -259,7 +260,7 @@ class TestPlatformImg(TestCase):
             u'</noscript>')
         self.assertEqual(markup, jinja2.Markup(expected))
 
-    @override_settings(MEDIA_URL='/media/')
+    @override_settings(STATIC_URL='/media/')
     def test_platform_img_with_optional_attributes(self):
         """Should return expected markup with optional attributes"""
         markup = platform_img('test.png', {'data-test-attr': 'test'})
@@ -308,7 +309,7 @@ class TestPressBlogUrl(TestCase):
 
 
 class TestHighResImg(TestCase):
-    @override_settings(MEDIA_URL='/media/')
+    @override_settings(STATIC_URL='/media/')
     def test_high_res_img_no_optional_attributes(self):
         """Should return expected markup without optional attributes"""
         markup = high_res_img('test.png')
@@ -318,7 +319,7 @@ class TestHighResImg(TestCase):
             u'<noscript><img src="/media/test.png" ></noscript>')
         self.assertEqual(markup, jinja2.Markup(expected))
 
-    @override_settings(MEDIA_URL='/media/')
+    @override_settings(STATIC_URL='/media/')
     def test_high_res_img_with_optional_attributes(self):
         """Should return expected markup with optional attributes"""
         markup = high_res_img('test.png', {'data-test-attr': 'test'})

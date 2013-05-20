@@ -69,6 +69,7 @@ echo "Update product_details"
 
 echo "Check PEP-8"
 flake8 bedrock
+flake8 lib
 
 echo "Starting tests..."
 export FORCE_DB=1
