@@ -67,6 +67,9 @@ SETTINGS
 echo "Update product_details"
 ./manage.py update_product_details
 
+echo "collectstatic to workaround a jingo-minify bug"
+./manage.py collectstatic --no-default-ignore --noinput --verbosity=0
+
 echo "Check PEP-8"
 flake8 bedrock
 flake8 lib
