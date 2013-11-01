@@ -25,6 +25,11 @@ if 'manage.py' not in sys.argv:
 CACHES['l10n'] = {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     'LOCATION': 'l10n',
+    'TIMEOUT': DOTLANG_CACHE,
+    'OPTIONS': {
+        'MAX_ENTRIES': 1000,
+        'CULL_FREQUENCY': 4,  # 1/4 entries deleted if max reached
+    }
 }
 
 MEDIA_URL = CDN_BASE_URL + MEDIA_URL
