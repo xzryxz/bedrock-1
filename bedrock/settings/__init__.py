@@ -23,7 +23,7 @@ if 'manage.py' not in sys.argv:
 
 # cache for lang files
 CACHES['l10n'] = {
-    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    'BACKEND': 'lib.l10n_utils.cache.L10nCache',
     'LOCATION': 'l10n',
     'TIMEOUT': DOTLANG_CACHE,
     'OPTIONS': {
