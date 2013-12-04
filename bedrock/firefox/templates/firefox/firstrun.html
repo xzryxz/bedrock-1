@@ -40,11 +40,13 @@
   <div class="tour-inner">
     <div id="tour-progress" class="progress-step">
       <div class="logo"></div>
-      <span>1</span>/4
-      <progress max="4" value="1"></progress>
+      <span class="step">2</span>/5
+      <div class="progress" data-val="2">
+        <span class="indicator"></span>
+      </div>
     </div>
     <ul id="tour-content" class="ui-tour-list">
-      <li class="tour-step current first app-menu" data-step="1">
+      <li class="tour-step current first app-menu" data-step="2">
         <div class="tour-item">
           <h2 class="tour-menu step-target" data-target="appmenu">{{ _('New Menu Panel for efficient browsing') }}</h2>
           <div class="tour-content">
@@ -57,7 +59,7 @@
           </div>
         </div>
       </li>
-      <li class="tour-step app-menu" data-step="2">
+      <li class="tour-step app-menu" data-step="3">
         <div class="tour-item">
           <h2 class="tour-menu step-target" data-target="appmenu">{{ _('Easier way to customize your browser') }}</h2>
           <div class="tour-content">
@@ -70,7 +72,7 @@
           </div>
         </div>
       </li>
-      <li class="tour-step" data-step="3">
+      <li class="tour-step" data-step="4">
         <div class="tour-item">
           <h2 class="tour-highlight step-target" data-target="bookmarks">Better Bookmarking</h2>
           <div class="tour-content">
@@ -82,7 +84,7 @@
           </div>
         </div>
       </li>
-      <li class="tour-step last" data-step="4">
+      <li class="tour-step last" data-step="5">
         <div class="tour-item">
           <h2 class="step-target tour-highlight" data-target="selectedtabstart">{{ _('Beautiful browsing starts now!') }}</h2>
           <div class="tour-content">

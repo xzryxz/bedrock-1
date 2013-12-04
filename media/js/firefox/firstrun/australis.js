@@ -10,7 +10,7 @@
         var $current = $('.ui-tour-list li.current');
         var step = $('.ui-tour-list li.current').data('step');
 
-        if (step === 4) {
+        if ($current.hasClass('last')) {
             $('button.close').off().one('click', closeTour).addClass('done');
         } else {
             $('button.close').off().one('click', compactTour).removeClass('done');
@@ -32,8 +32,8 @@
             Mozilla.UITour.hideHighlight();
             // Mozilla.UITour.removePinnedTab();
             $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
-            $('.progress-step span').text(step);
-            $('.progress-step progress').val(step);
+            $('.progress-step .step').text(step);
+            $('.progress-step .progress').attr('data-val', step);
 
             // hide menu panel when not needed as it's now sticky.
             if (!$('.ui-tour-list li.current').hasClass('app-menu')) {
@@ -145,8 +145,8 @@
             if (tourIsVisible) {
                 var step = $('.ui-tour-list li.current').data('step');
                 $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
-                $('.progress-step span').text(step);
-                $('.progress-step progress').val(step);
+                $('.progress-step .step').text(step);
+                $('.progress-step .progress').data('val', step);
             } else if (!tourHasStarted) {
                 $('.tour-init').trigger('tour-step');
             }

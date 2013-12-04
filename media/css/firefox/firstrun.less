@@ -337,10 +337,31 @@ body.noscroll {
         font-size: 12px;
         color: #424F5A;
         line-height: 22px;
-        progress {
+        .progress {
             display: block;
             width: 45px;
             margin: 0 auto;
+            text-align: left;
+            .indicator {
+                display: inline-block;
+                width: 0;
+                height: 5px;
+                background: red;
+                transition: all .3s ease-in-out;
+                transform: width;
+            }
+        }
+        .progress[data-val="2"] .indicator {
+            width: 40%;
+        }
+        .progress[data-val="3"] .indicator {
+            width: 60%;
+        }
+        .progress[data-val="4"] .indicator {
+            width: 80%;
+        }
+        .progress[data-val="5"] .indicator {
+            width: 100%;
         }
         .logo {
             width: 43px;
