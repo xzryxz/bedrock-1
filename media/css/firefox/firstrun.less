@@ -338,15 +338,20 @@ body.noscroll {
         color: #424F5A;
         line-height: 22px;
         .progress {
-            display: block;
+            position: relative;
             width: 45px;
-            margin: 0 auto;
+            height: 3px;
+            margin: @baseLine / 2 auto 0 auto;
             text-align: left;
+            background: #C7C7C7;
             .indicator {
+                position: absolute;
+                top: 0;
+                left: 0;
                 display: inline-block;
                 width: 0;
-                height: 5px;
-                background: red;
+                height: 3px;
+                background: #FF9500;
                 transition: all .3s ease-in-out;
                 transform: width;
             }
@@ -409,8 +414,8 @@ body.noscroll {
     margin-top: @baseLine / 2;
     border-right: 1px solid #c7c7c7;
     padding: 0 10px (@baseLine / 2) 0;
-    progress {
-        margin: 0 auto;
+    .progress {
+        float: right;
     }
     .logo {
         float: left;
