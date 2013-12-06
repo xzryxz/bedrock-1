@@ -21,8 +21,14 @@
 {% endblock %}
 
 {% block string_data %}
-  {# L10n: This is the label for a button that closes a modal dialog #}
+  {# L10n: This is the label for a button that opens the tour modal dialog #}
+  data-open="{{ _('Open') }}"
+  {# L10n: This is the label for a button that closes the tour modal dialog #}
   data-close="{{ _('Close') }}"
+  {# L10n: This is the label for a button that finishes the tour and closes the modal dialog #}
+  data-done="{{ _('Done') }}"
+  {# L10n: This is the label for a button that proceeds to the next step of the tour #}
+  data-next="{{ _('Next') }}"
 {% endblock %}
 
 {% block content %}
@@ -30,27 +36,27 @@
 
 <article id="main-content" class="billboard"></article>
 
-<div id="modal" tabindex="-1">
-  <div class="modal-inner">
-    <h1 id="modal-header">{{ _('Welcome to Firefox!') }}</h1>
+<div id="ui-tour-mask" tabindex="-1">
+  <div class="mask-inner">
+    <h1 id="mask-header">{{ _('Welcome to Firefox!') }}</h1>
     <p><em>Congrats, you're up to date!</em></p>
   </div>
 </div>
-<div id="firstrun" role="dialog" tabindex="-1">
+<div id="ui-tour" role="dialog" tabindex="-1" aria-expanded="false">
   <div class="tour-inner">
     <div id="tour-progress" class="progress-step">
       <div class="logo"></div>
-      <span class="step">2</span>/5
-      <div class="progress" data-val="2">
+      <span class="step">1</span>/4
+      <div class="progress" data-val="1">
         <span class="indicator"></span>
       </div>
     </div>
     <ul id="tour-content" class="ui-tour-list">
-      <li class="tour-step current first app-menu" data-step="2">
+      <li class="tour-step current first app-menu" data-step="1">
         <div class="tour-item">
           <h2 class="tour-menu step-target" data-target="appmenu">{{ _('New Menu Panel for efficient browsing') }}</h2>
           <div class="tour-content">
-            <div class="tour-highlight step-target" data-target="addons"></div>
+            <div class="tour-highlight step-target" data-target="addons" data-effect="color"></div>
             <ul>
               <li>Find all your tools handy in one place</li>
               <li>Visually appealing and touch friendly</li>
@@ -59,11 +65,11 @@
           </div>
         </div>
       </li>
-      <li class="tour-step app-menu" data-step="3">
+      <li class="tour-step app-menu" data-step="2">
         <div class="tour-item">
           <h2 class="tour-menu step-target" data-target="appmenu">{{ _('Easier way to customize your browser') }}</h2>
           <div class="tour-content">
-            <div class="tour-highlight step-target" data-target="customize"></div>
+            <div class="tour-highlight step-target" data-target="customize" data-effect="color"></div>
             <ul>
               <li>A easy-to-discover customization button</li>
               <li>Arrange what tool goes where for your specific needs</li>
@@ -72,9 +78,9 @@
           </div>
         </div>
       </li>
-      <li class="tour-step" data-step="4">
+      <li class="tour-step" data-step="3">
         <div class="tour-item">
-          <h2 class="tour-highlight step-target" data-target="bookmarks">Better Bookmarking</h2>
+          <h2 class="tour-highlight step-target" data-target="bookmarks" data-effect="color">Better Bookmarking</h2>
           <div class="tour-content">
             <ul>
               <li>New split bookmarks button</li>
@@ -84,9 +90,9 @@
           </div>
         </div>
       </li>
-      <li class="tour-step last" data-step="5">
+      <li class="tour-step last" data-step="4">
         <div class="tour-item">
-          <h2 class="step-target tour-highlight" data-target="selectedtabstart">{{ _('Beautiful browsing starts now!') }}</h2>
+          <h2 class="step-target tour-highlight" data-target="selectedtabstart" data-effect="color">{{ _('Beautiful browsing starts now!') }}</h2>
           <div class="tour-content">
             <ul>
               <li>The most modern, simple and clean browser</li>
@@ -98,12 +104,12 @@
       </li>
     </ul>
     <div class="compact-title"></div>
-    <div class="tour-info tour-init tour-highlight" data-target="appmenu" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
+    <div class="tour-info tour-init tour-highlight" data-target="appmenu" data-effect="color" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
 
-    <div class="ui-tour-controls" aria-controls="tour-content tour-progress">
-      <button class="step prev">Prev</button>
-      <button class="step next">Next</button>
-      <button class="close">Close</button>
+    <div class="ui-tour-controls" aria-controls="ui-tour tour-content tour-progress">
+      <button class="step prev">{{ _('Previous') }}</button>
+      <button class="step next">{{ _('Next') }}</button>
+      <button class="close">{{ _('Close') }}</button>
     </div>
   </div>
 </div>

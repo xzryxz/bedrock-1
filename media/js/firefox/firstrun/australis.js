@@ -3,17 +3,20 @@
 
     var tourIsVisible = false;
     var tourHasStarted = false;
-    var $tour = $('#firstrun').detach();
-    var $modal = $('#modal').detach().show();
+    var $tour = $('#ui-tour').detach();
+    var $modal = $('#ui-tour-mask').detach().show();
 
     function updateControls () {
         var $current = $('.ui-tour-list li.current');
         var step = $('.ui-tour-list li.current').data('step');
+        var $closeButton = $('button.close');
 
         if ($current.hasClass('last')) {
-            $('button.close').off().one('click', closeTour).addClass('done');
+            $closeButton.off().one('click', closeTour);
+            $closeButton.addClass('done').text(window.trans('done'));
         } else {
-            $('button.close').off().one('click', compactTour).removeClass('done');
+            $closeButton.off().one('click', compactTour);
+            $closeButton.removeClass('done').text(window.trans('close'));
         }
 
         if ($current.hasClass('first')) {
@@ -73,6 +76,7 @@
         $modal.fadeOut(function () {
             $('body').removeClass('noscroll');
             tourIsVisible = false;
+            $(document).off('.ui-tour').focus();
         });
     }
 
@@ -82,11 +86,12 @@
         Mozilla.UITour.hideHighlight();
         Mozilla.UITour.hideMenu('appmenu');
         $tour.removeClass('in').addClass('compact');
+        $tour.attr('aria-expanded', false);
         $('.ui-tour-list').fadeOut('fast');
         $('.progress-step').fadeOut('fast');
         $('.ui-tour-controls .prev').fadeOut();
         $('.ui-tour-controls .close').fadeOut();
-        $('.ui-tour-controls .next').addClass('up');
+        $('.ui-tour-controls .next').addClass('up').text(window.trans('open')).focus();
         $('button.up').one('click', expandTour);
         $modal.fadeOut('slow', function () {
             $('body').removeClass('noscroll');
@@ -97,14 +102,14 @@
 
     function expandTour() {
         tourIsVisible = true;
-        //window.scrollTo(0,0);
         $tour.removeClass('compact').addClass('in').focus();
+        $tour.attr('aria-expanded', true);
         $('.compact-title').fadeOut('fast');
         $('.progress-step').fadeOut('fast');
         $('.ui-tour-controls .prev').fadeIn();
         $('.ui-tour-controls .close').fadeIn();
-        $('.ui-tour-controls .up').removeClass('up');
-        $('button.close').one('click', compactTour);
+        $('.ui-tour-controls .up').removeClass('up').text(window.trans('next'));
+        $('button.close').one('click', compactTour).focus();
         $modal.fadeIn('slow', function () {
             $('body').addClass('noscroll');
             $('.ui-tour-list li.current .step-target').trigger('tour-step');
@@ -115,8 +120,6 @@
     }
 
     function startTour() {
-
-        //window.scrollTo(0,0);
         tourIsVisible = true;
 
         $('button.close').one('click', compactTour);
@@ -126,14 +129,31 @@
 
         $modal.fadeIn('fast', function () {
             $tour.addClass('in').focus();
+            $tour.attr('aria-expanded', true);
             tourIsVisible = true;
             tourHasStarted = true;
         });
 
-        $('.modal-inner').addClass('out');
+        $('.mask-inner').addClass('out');
 
         Mozilla.UITour.hideInfo();
         $('.ui-tour-list li.current .step-target').trigger('tour-step');
+
+        // close with escape key
+        $(document).on('keyup.ui-tour', function(e) {
+          if (e.keyCode === 27 && tourIsVisible) {
+            compactTour();
+          }
+        });
+
+        // prevent focusing out of modal while open
+        $(document).on('focus.ui-tour', 'body', function(e) {
+          // .contains must be called on the underlying HTML element, not the jQuery object
+          if (tourIsVisible && !$tour[0].contains(e.target)) {
+            e.stopPropagation();
+            $tour.focus();
+          }
+        });
     }
 
     function handleVisibilityChange () {
@@ -159,7 +179,7 @@
         $('body').append($modal).append($tour).addClass('noscroll');
 
         $('.tour-highlight').on('tour-step', function () {
-            Mozilla.UITour.showHighlight(this.dataset.target);
+            Mozilla.UITour.showHighlight(this.dataset.target, this.dataset.effect);
         });
 
         $('.tour-info').on('tour-step', function () {

@@ -196,6 +196,7 @@ MINIFY_BUNDLES = {
         'firefox_firstrun': (
             'css/sandstone/video.less',
             'css/firefox/firstrun.less',
+            'css/firefox/australis-ui-tour.less',
         ),
         'nightly_firstrun': (
             'css/sandstone/video.less',
