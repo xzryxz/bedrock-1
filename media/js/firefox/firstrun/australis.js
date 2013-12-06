@@ -36,7 +36,7 @@
             // Mozilla.UITour.removePinnedTab();
             $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
             $('.progress-step .step').text(step);
-            $('.progress-step .progress').attr('data-val', step);
+            $('.progress-step .progress').attr('aria-valuenow', step);
 
             // hide menu panel when not needed as it's now sticky.
             if (!$('.ui-tour-list li.current').hasClass('app-menu')) {
@@ -166,7 +166,7 @@
                 var step = $('.ui-tour-list li.current').data('step');
                 $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
                 $('.progress-step .step').text(step);
-                $('.progress-step .progress').data('val', step);
+                $('.progress-step .progress').attr('aria-valuenow', step);
             } else if (!tourHasStarted) {
                 $('.tour-init').trigger('tour-step');
             }
