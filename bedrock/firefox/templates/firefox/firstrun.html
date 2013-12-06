@@ -39,7 +39,7 @@
 <div id="ui-tour-mask" tabindex="-1">
   <div class="mask-inner">
     <h1 id="mask-header">{{ _('Welcome to Firefox!') }}</h1>
-    <p><em>Congrats, you're up to date!</em></p>
+    <p><em>{{ _('Congrats, you’re up to date!') }}</em></p>
   </div>
 </div>
 <div id="ui-tour" role="dialog" tabindex="-1" aria-expanded="false">
@@ -54,57 +54,65 @@
     <ul id="tour-content" class="ui-tour-list">
       <li class="tour-step current first app-menu" data-step="1">
         <div class="tour-item">
-          <h2 class="tour-menu step-target" data-target="appmenu">{{ _('New Menu Panel for efficient browsing') }}</h2>
+          <h2 class="tour-menu step-target" data-target="appmenu">
+            {{ _('New Menu Panel for efficient browsing') }}
+          </h2>
           <div class="tour-content">
-            <div class="tour-highlight step-target" data-target="addons" data-effect="color"></div>
+            <div class="tour-highlight step-target" data-target="addons"></div>
             <ul>
-              <li>Find all your tools handy in one place</li>
-              <li>Visually appealing and touch friendly</li>
-              <li>Add more tools from thousands of Add-ons</li>
+              <li>{{ _('Find all your tools handy in one place') }}</li>
+              <li>{{ _('Visually appealing and touch friendly') }}</li>
+              <li>{{ _('Add more tools from thousands of Add-ons') }}</li>
             </ul>
           </div>
         </div>
       </li>
       <li class="tour-step app-menu" data-step="2">
         <div class="tour-item">
-          <h2 class="tour-menu step-target" data-target="appmenu">{{ _('Easier way to customize your browser') }}</h2>
+          <h2 class="tour-menu step-target" data-target="appmenu">
+            {{ _('Easier way to customize your browser') }}
+          </h2>
           <div class="tour-content">
-            <div class="tour-highlight step-target" data-target="customize" data-effect="color"></div>
+            <div class="tour-highlight step-target" data-target="customize"></div>
             <ul>
-              <li>A easy-to-discover customization button</li>
-              <li>Arrange what tool goes where for your specific needs</li>
-              <li>Customize Firefox just the way you want it</li>
+              <li>{{ _('A easy-to-discover customization button') }}</li>
+              <li>{{ _('Arrange what tool goes where for your specific needs') }}</li>
+              <li>{{ _('Customize Firefox just the way you want it') }}</li>
             </ul>
           </div>
         </div>
       </li>
       <li class="tour-step" data-step="3">
         <div class="tour-item">
-          <h2 class="tour-highlight step-target" data-target="bookmarks" data-effect="color">Better Bookmarking</h2>
+          <h2 class="tour-highlight step-target" data-target="bookmarks">
+            {{ _('Better Bookmarking') }}
+          </h2>
           <div class="tour-content">
             <ul>
-              <li>New split bookmarks button</li>
-              <li>One-click bookmarking using the star</li>
-              <li>Quick access to all things you saved</li>
+              <li>{{ _('New split bookmarks button') }}</li>
+              <li>{{ _('One-click bookmarking using the star') }}</li>
+              <li>{{ _('Quick access to all things you saved') }}</li>
             </ul>
           </div>
         </div>
       </li>
       <li class="tour-step last" data-step="4">
         <div class="tour-item">
-          <h2 class="step-target tour-highlight" data-target="selectedtabstart" data-effect="color">{{ _('Beautiful browsing starts now!') }}</h2>
+          <h2 class="step-target tour-highlight" data-target="selectedtabstart">
+            {{ _('Beautiful browsing starts now!') }}
+          </h2>
           <div class="tour-content">
             <ul>
-              <li>The most modern, simple and clean browser</li>
-              <li>The most customizable browser that caters just your needs</li>
-              <li>Enjoy the new Firefox that is faster than ever before</li>
+              <li>{{ _('The most modern, simple and clean browser') }}</li>
+              <li>{{ _('The most customizable browser that caters just your needs') }}</li>
+              <li>{{ _('Enjoy the new Firefox that is faster than ever before') }}</li>
             </ul>
           </div>
         </div>
       </li>
     </ul>
     <div class="compact-title"></div>
-    <div class="tour-info tour-init tour-highlight" data-target="appmenu" data-effect="color" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
+    <div class="tour-info tour-init tour-highlight" data-target="appmenu" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
 
     <div class="ui-tour-controls" aria-controls="ui-tour tour-content tour-progress">
       <button class="step prev">{{ _('Previous') }}</button>

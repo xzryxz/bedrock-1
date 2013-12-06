@@ -175,11 +175,10 @@
 
     function init () {
         var $doc = $(document);
-        //window.scrollTo(0,0);
         $('body').append($modal).append($tour).addClass('noscroll');
 
         $('.tour-highlight').on('tour-step', function () {
-            Mozilla.UITour.showHighlight(this.dataset.target, this.dataset.effect);
+            Mozilla.UITour.showHighlight(this.dataset.target);
         });
 
         $('.tour-info').on('tour-step', function () {
@@ -197,6 +196,9 @@
         $('button.step').on('click', goToNextTourStep);
     }
 
-    init();
+    // TODO - also check version number for Australis release
+    if (isFirefox() && !isMobile()) {
+        init();
+    }
 
 })(window.jQuery);
