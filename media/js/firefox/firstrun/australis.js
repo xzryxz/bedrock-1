@@ -5,6 +5,7 @@
     var tourHasStarted = false;
     var $tour = $('#ui-tour').detach();
     var $modal = $('#ui-tour-mask').detach().show();
+    var highlightTimer;
 
     function updateControls () {
         var $current = $('.ui-tour-list li.current');
@@ -28,19 +29,34 @@
         }
     }
 
+    function rotateHighLights () {
+        var targets = ['appmenu', 'home', 'bookmarks', 'selectedtabstart', 'backforward'];
+        var i = 0;
+        highlightTimer = setInterval(function () {
+            Mozilla.UITour.showHighlight(targets[i]);
+            i = (targets.length === i) ? 0 : i + 1;
+        }, 1000);
+    }
+
     function onTourStep (e) {
         if (e.originalEvent.propertyName === 'transform') {
-            var step = $('.ui-tour-list li.current').data('step');
+            var $current = $('.ui-tour-list li.current');
+            var step = $current.data('step');
             Mozilla.UITour.hideInfo();
             Mozilla.UITour.hideHighlight();
-            // Mozilla.UITour.removePinnedTab();
-            $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
+            $current.find('.step-target').delay(100).trigger('tour-step');
             $('.progress-step .step').text(step);
             $('.progress-step .progress').attr('aria-valuenow', step);
 
             // hide menu panel when not needed as it's now sticky.
-            if (!$('.ui-tour-list li.current').hasClass('app-menu')) {
+            if (!$current.hasClass('app-menu')) {
                 Mozilla.UITour.hideMenu('appmenu');
+            }
+            // if we're on the last step, rotate the menu highlights
+            if ($current.hasClass('last')) {
+                rotateHighLights();
+            } else {
+                clearInterval(highlightTimer);
             }
         }
     }
@@ -71,6 +87,7 @@
     }
 
     function closeTour() {
+        clearInterval(highlightTimer);
         Mozilla.UITour.hideHighlight();
         $tour.removeClass('in');
         $modal.fadeOut(function () {
@@ -157,16 +174,22 @@
     }
 
     function handleVisibilityChange () {
+        var $current = $('.ui-tour-list li.current');
+        var step = $current.data('step');
+
         if (document.hidden) {
+            clearInterval(highlightTimer);
             Mozilla.UITour.hideHighlight();
             Mozilla.UITour.hideInfo();
             Mozilla.UITour.hideMenu('appmenu');
         } else {
             if (tourIsVisible) {
-                var step = $('.ui-tour-list li.current').data('step');
-                $('.ui-tour-list li.current .step-target').delay(100).trigger('tour-step');
+                $current.find('.step-target').delay(100).trigger('tour-step');
                 $('.progress-step .step').text(step);
                 $('.progress-step .progress').attr('aria-valuenow', step);
+                if ($current.hasClass('last')) {
+                    rotateHighLights();
+                }
             } else if (!tourHasStarted) {
                 $('.tour-init').trigger('tour-step');
             }
