@@ -30,7 +30,7 @@
     }
 
     function rotateHighLights () {
-        var targets = ['appmenu', 'home', 'bookmarks', 'selectedtabstart', 'backforward'];
+        var targets = ['urlbar', 'search', 'searchprovider', 'bookmarks', 'appmenu', 'home', 'selectedtabstart', 'backforward'];
         var i = 0;
         highlightTimer = setInterval(function () {
             Mozilla.UITour.showHighlight(targets[i]);
@@ -212,7 +212,7 @@
             Mozilla.UITour.showMenu(this.dataset.target);
         });
 
-        $modal.on('click', startTour);
+        $modal.one('click', startTour);
         $doc.on('transitionend', '.ui-tour-list li.current', onTourStep);
         $doc.on('visibilitychange', handleVisibilityChange);
         $('.tour-init').trigger('tour-step');
