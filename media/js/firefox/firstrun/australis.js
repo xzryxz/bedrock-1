@@ -30,8 +30,9 @@
     }
 
     function rotateHighLights () {
-        var targets = ['urlbar', 'search', 'searchprovider', 'bookmarks', 'appmenu', 'home', 'selectedtabstart', 'backforward'];
+        var targets = ['search', 'bookmarks', 'home', 'appmenu', 'selectedtabstart', 'backforward', 'urlbar'];
         var i = 0;
+        Mozilla.UITour.showHighlight('urlbar');
         highlightTimer = setInterval(function () {
             Mozilla.UITour.showHighlight(targets[i]);
             i = (targets.length === i) ? 0 : i + 1;
