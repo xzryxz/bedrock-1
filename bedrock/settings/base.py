@@ -885,3 +885,6 @@ DONATE_LOCALE_LINK = {
 
 # Mapbox token for spaces and communities pages
 MAPBOX_TOKEN = 'examples.map-9ijuk24y'
+
+# Optimize.ly project code for base template JS snippet
+OPTIMIZELY_PROJECT_ID = None
