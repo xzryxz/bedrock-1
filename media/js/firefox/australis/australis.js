@@ -68,6 +68,8 @@
                     $closeButton.removeClass('done').text(window.trans('close'));
                 }
 
+                $closeButton.removeAttr('disabled', 'disabled');
+
                 // update prev/next button states
                 if ($current.hasClass('first')) {
                     $prevButton.attr('disabled', 'disabled');
@@ -138,7 +140,7 @@
                 var step = $(this).hasClass('prev') ? 'prev' : 'next';
                 var $current = $tourList.find('li.current');
                 tourIsAnimating = true;
-                $('button.step').attr('disabled', 'disabled');
+                $('.ui-tour-controls button').attr('disabled', 'disabled');
                 if (step === 'prev') {
                     $current.removeClass('current next-out').addClass('prev-out');
                     $current.prev().addClass('current');
