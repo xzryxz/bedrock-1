@@ -67,6 +67,7 @@ body.noscroll {
 }
 
 #ui-tour {
+    display: none;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -315,6 +316,25 @@ body.noscroll {
     .logo {
         float: left;
         margin: 0 10px 0 0;
+    }
+}
+
+.no-js #ui-tour {
+    display: block;
+    position: static;
+    opacity: 1;
+    transform: none;
+    height: auto;
+    .ui-tour-controls,
+    .progress-step {
+        display: none;
+    }
+    .ui-tour-list {
+        .tour-step {
+            position: static;
+            opacity: 1;
+            transform: none;
+        }
     }
 }
 
