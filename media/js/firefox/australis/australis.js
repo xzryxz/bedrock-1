@@ -30,9 +30,9 @@
     }
 
     function rotateHighLights () {
-        var targets = ['search', 'bookmarks', 'home', 'appmenu', 'selectedtabstart', 'backforward', 'urlbar'];
+        var targets = ['bookmarks', 'appmenu', 'selectedtabstart'];
         var i = 0;
-        Mozilla.UITour.showHighlight('urlbar');
+        Mozilla.UITour.showHighlight('selectedtabstart');
         highlightTimer = setInterval(function () {
             Mozilla.UITour.showHighlight(targets[i]);
             i = (targets.length === i) ? 0 : i + 1;
@@ -213,7 +213,9 @@
             Mozilla.UITour.showMenu(this.dataset.target);
         });
 
+        // temporary click handler to start the tour until we get a button in the door hanger
         $modal.one('click', startTour);
+
         $doc.on('transitionend', '.ui-tour-list li.current', onTourStep);
         $doc.on('visibilitychange', handleVisibilityChange);
         $('.tour-init').trigger('tour-step');

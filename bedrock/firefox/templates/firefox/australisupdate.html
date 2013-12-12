@@ -1,0 +1,132 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. #}
+
+{% extends "/firefox/base.html" %}
+
+{% add_lang_files "australis-update" %}
+
+{% block extra_meta %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block page_title_prefix %}{% endblock %}
+{% block page_title %}{{ _('Welcome to Firefox') }}{% endblock %}
+{% block page_title_suffix %}{% endblock %}
+{% block body_id %}firefox-australis-update{% endblock %}
+
+{% block site_header_nav %}{% endblock %}
+{% block site_header_logo %}{% endblock %}
+
+{% block site_css %}
+  {{ css('firefox_australis_update') }}
+{% endblock %}
+
+{% block string_data %}
+  {# L10n: This is the label for a button that opens the tour modal dialog #}
+  data-open="{{ _('Open') }}"
+  {# L10n: This is the label for a button that closes the tour modal dialog #}
+  data-close="{{ _('Close') }}"
+  {# L10n: This is the label for a button that finishes the tour and closes the modal dialog #}
+  data-done="{{ _('Done') }}"
+  {# L10n: This is the label for a button that proceeds to the next step of the tour #}
+  data-next="{{ _('Next') }}"
+{% endblock %}
+
+{% block content %}
+<h1 id="welcome-header">{{ _('Welcome to Firefox!') }}</h1>
+
+<article id="main-content" class="billboard"></article>
+
+<div id="ui-tour-mask" tabindex="-1">
+  <div class="mask-inner">
+    <h1 id="mask-header">{{ _('Welcome to Firefox!') }}</h1>
+    <p><em>{{ _('Congrats, you’re up to date!') }}</em></p>
+  </div>
+</div>
+<div id="ui-tour" role="dialog" tabindex="-1" aria-expanded="false">
+  <div class="tour-inner">
+    <div id="tour-progress" class="progress-step">
+      <div class="logo"></div>
+      <span class="step">1</span>/4
+      <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+        <span class="indicator"></span>
+      </div>
+    </div>
+    <ul id="tour-content" class="ui-tour-list">
+      <li class="tour-step current first app-menu" data-step="1">
+        <div class="tour-item">
+          <h2 class="tour-menu step-target" data-target="appmenu">
+            {{ _('New Menu Panel for efficient browsing') }}
+          </h2>
+          <div class="tour-content">
+            <div class="tour-highlight step-target" data-target="addons"></div>
+            <ul>
+              <li>{{ _('Find all your tools handy in one place') }}</li>
+              <li>{{ _('Visually appealing and touch friendly') }}</li>
+              <li>{{ _('Add more tools from thousands of Add-ons') }}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="tour-step app-menu" data-step="2">
+        <div class="tour-item">
+          <h2 class="tour-menu step-target" data-target="appmenu">
+            {{ _('Easier way to customize your browser') }}
+          </h2>
+          <div class="tour-content">
+            <div class="tour-highlight step-target" data-target="customize"></div>
+            <ul>
+              <li>{{ _('A easy-to-discover customization button') }}</li>
+              <li>{{ _('Arrange what tool goes where for your specific needs') }}</li>
+              <li>{{ _('Customize Firefox just the way you want it') }}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="tour-step" data-step="3">
+        <div class="tour-item">
+          <h2 class="tour-highlight step-target" data-target="bookmarks">
+            {{ _('Better Bookmarking') }}
+          </h2>
+          <div class="tour-content">
+            <ul>
+              <li>{{ _('New split bookmarks button') }}</li>
+              <li>{{ _('One-click bookmarking using the star') }}</li>
+              <li>{{ _('Quick access to all things you saved') }}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="tour-step last" data-step="4">
+        <div class="tour-item">
+          <h2>
+            {{ _('Beautiful browsing starts now!') }}
+          </h2>
+          <div class="tour-content">
+            <ul>
+              <li>{{ _('The most modern, simple and clean browser') }}</li>
+              <li>{{ _('The most customizable browser that caters just your needs') }}</li>
+              <li>{{ _('Enjoy the new Firefox that is faster than ever before') }}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="compact-title"></div>
+    <div class="tour-info tour-init tour-highlight" data-target="appmenu" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
+
+    <div class="ui-tour-controls" aria-controls="ui-tour tour-content tour-progress">
+      <button class="step prev">{{ _('Previous') }}</button>
+      <button class="step next">{{ _('Next') }}</button>
+      <button class="close">{{ _('Close') }}</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block email_form %}{% endblock%}
+
+{% block site_footer %}{% endblock %}
+
+{% block js %}
+  {{ js('firefox_australis_update') }}
+{% endblock  %}

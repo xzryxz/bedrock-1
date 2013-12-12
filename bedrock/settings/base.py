@@ -157,6 +157,10 @@ MINIFY_BUNDLES = {
         'firefox_all': (
             'css/firefox/all.less',
         ),
+        'firefox_australis_update': (
+            'css/firefox/australis/update.less',
+            'css/firefox/australis/australis-ui-tour.less',
+        ),
         'firefox_unsupported': (
             'css/firefox/unsupported.less',
         ),
@@ -196,7 +200,6 @@ MINIFY_BUNDLES = {
         'firefox_firstrun': (
             'css/sandstone/video.less',
             'css/firefox/firstrun.less',
-            'css/firefox/australis-ui-tour.less',
         ),
         'nightly_firstrun': (
             'css/sandstone/video.less',
@@ -441,6 +444,11 @@ MINIFY_BUNDLES = {
         'firefox_all': (
             'js/firefox/firefox-language-search.js',
         ),
+        'firefox_australis_update': (
+            'js/base/mozilla-modal.js',
+            'js/firefox/australis/mozilla-uitour.js',
+            'js/firefox/australis/australis.js',
+        ),
         'firefox-resp': (
             'js/libs/jquery-1.7.1.min.js',
             'js/base/global.js',
@@ -467,9 +475,6 @@ MINIFY_BUNDLES = {
             'js/firefox/features.js',
         ),
         'firefox_firstrun': (
-            'js/base/mozilla-modal.js',
-            'js/firefox/firstrun/mozilla-uitour.js',
-            'js/firefox/firstrun/australis.js',
             'js/firefox/firstrun/firstrun.js',
         ),
         'firefox_firstrun_new_a': (

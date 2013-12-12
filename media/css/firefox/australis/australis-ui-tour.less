@@ -2,7 +2,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-@import "template-resp.less";
+@baseLine: 20px;
+
+@font-face {
+    font-family: 'Fira Light';
+    src: url('/media/fonts/FiraSans-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans Regular';
+    src: url('/media/fonts/ClearSans-Regular.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
 
 body.noscroll {
   overflow: hidden;
@@ -22,7 +36,7 @@ body.noscroll {
 
     .mask-inner {
         position: relative;
-        width: @widthDesktop;
+        width: 1000px;
         margin: 0 auto;
         h1 {
             width: 850px;
@@ -85,7 +99,7 @@ body.noscroll {
     .tour-inner {
         position: relative;
         height: 100%;
-        width: @widthDesktop;
+        width: 1000px;
         margin: 0 auto;
     }
 
