@@ -159,7 +159,6 @@ body.noscroll {
                 padding-bottom: @baseLine;
                 border-bottom: 1px solid #C7C7C7;
                 margin: @baseLine auto;
-                transition: font 1s ease;
             }
         }
     }
@@ -189,6 +188,11 @@ body.noscroll {
             margin: 0 2px;
             border: 1px solid transparent;
             cursor: pointer;
+            transition: opacity .3s ease;
+        }
+
+        button[disabled] {
+            opacity: 0.4;
         }
 
         button:hover,
