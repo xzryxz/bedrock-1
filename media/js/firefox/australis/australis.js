@@ -30,9 +30,9 @@
     }
 
     function rotateHighLights () {
-        var targets = ['bookmarks', 'appmenu', 'selectedtabstart'];
+        var targets = ['bookmarks', 'appMenu', 'selectedTabStart'];
         var i = 0;
-        Mozilla.UITour.showHighlight('selectedtabstart');
+        Mozilla.UITour.showHighlight('selectedTabStart');
         highlightTimer = setInterval(function () {
             Mozilla.UITour.showHighlight(targets[i]);
             i = (targets.length === i) ? 0 : i + 1;
@@ -51,7 +51,7 @@
 
             // hide menu panel when not needed as it's now sticky.
             if (!$current.hasClass('app-menu')) {
-                Mozilla.UITour.hideMenu('appmenu');
+                Mozilla.UITour.hideMenu('appMenu');
             }
             // if we're on the last step, rotate the menu highlights
             if ($current.hasClass('last')) {
@@ -102,7 +102,7 @@
         var title = $('.ui-tour-list .tour-step.current h2').text();
         tourIsVisible = false;
         Mozilla.UITour.hideHighlight();
-        Mozilla.UITour.hideMenu('appmenu');
+        Mozilla.UITour.hideMenu('appMenu');
         $tour.removeClass('in').addClass('compact');
         $tour.attr('aria-expanded', false);
         $('.ui-tour-list').fadeOut('fast');
@@ -182,7 +182,7 @@
             clearInterval(highlightTimer);
             Mozilla.UITour.hideHighlight();
             Mozilla.UITour.hideInfo();
-            Mozilla.UITour.hideMenu('appmenu');
+            Mozilla.UITour.hideMenu('appMenu');
         } else {
             if (tourIsVisible) {
                 $current.find('.step-target').delay(100).trigger('tour-step');

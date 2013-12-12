@@ -72,5 +72,5 @@ urlpatterns = patterns('',
     page('firefox/os/notes/1.1', 'firefox/os/notes-1.1.html'),
     page('firefox/os/notes/1.2', 'firefox/os/notes-1.2.html'),
 
-    page('firefox/australisupdate', 'firefox/australisupdate.html'),
+    page('firefox/australis/update', 'firefox/australis/update.html'),
 )
