@@ -14,6 +14,9 @@
         var $prevButton;
         var $nextButton;
         var $closeButton;
+        var $tourList;
+        var $progress;
+        var $compactTitle;
 
         return {
 
@@ -35,9 +38,12 @@
                     Mozilla.UITour.showMenu(this.dataset.target);
                 });
 
+                $tourList = $('.ui-tour-list');
                 $prevButton = $('button.prev');
                 $nextButton = $('button.next');
                 $closeButton = $('button.close');
+                $progress = $('.progress-step');
+                $compactTitle = $('.compact-title');
 
                 // temporary click handler to start the tour until we get a button in the door hanger
                 $mask.one('click', Tour.startTour);
@@ -52,7 +58,7 @@
              * Updates the tour UI controls buttons to reflect the current step
              */
             updateControls: function () {
-                var $current = $('.ui-tour-list li.current');
+                var $current = $tourList.find('li.current');
 
                 if ($current.hasClass('last')) {
                     $closeButton.off().one('click', Tour.closeTour);
@@ -94,14 +100,14 @@
              */
             onTourStep: function (e) {
                 if (e.originalEvent.propertyName === 'transform') {
-                    var $current = $('.ui-tour-list li.current');
+                    var $current = $tourList.find('li.current');
                     var step = $current.data('step');
                     tourIsAnimating = false;
                     Mozilla.UITour.hideInfo();
                     Mozilla.UITour.hideHighlight();
                     $current.find('.step-target').delay(100).trigger('tour-step');
-                    $('.progress-step .step').text(step);
-                    $('.progress-step .progress').attr('aria-valuenow', step);
+                    $progress.find('.step').text(step);
+                    $progress.find('.progress').attr('aria-valuenow', step);
 
                     // hide menu panel when not needed as it's now sticky.
                     if (!$current.hasClass('app-menu')) {
@@ -110,9 +116,14 @@
                     // if we're on the last step, rotate the menu highlights
                     if ($current.hasClass('last')) {
                         Tour.rotateHighLights();
+                        $nextButton.addClass('faded');
+                    } else if ($current.hasClass('first')) {
+                        $prevButton.addClass('faded');
                     } else {
                         clearInterval(highlightTimer);
+                        $('button.step').removeClass('faded');
                     }
+                    Tour.updateControls();
                 }
             },
 
@@ -125,8 +136,9 @@
                     return;
                 }
                 var step = $(this).hasClass('prev') ? 'prev' : 'next';
-                var $current = $('.ui-tour-list li.current');
+                var $current = $tourList.find('li.current');
                 tourIsAnimating = true;
+                $('button.step').attr('disabled', 'disabled');
                 if (step === 'prev') {
                     $current.removeClass('current next-out').addClass('prev-out');
                     $current.prev().addClass('current');
@@ -134,7 +146,6 @@
                     $current.removeClass('current prev-out').addClass('next-out');
                     $current.next().addClass('current');
                 }
-                Tour.updateControls();
             },
 
             /*
@@ -168,22 +179,22 @@
              * Called when pressing the close button mid-way through the tour
              */
             compactTour: function () {
-                var title = $('.ui-tour-list .tour-step.current h2').text();
+                var title = $tourList.find('li.current h2').text();
                 tourIsVisible = false;
                 Mozilla.UITour.hideHighlight();
                 Mozilla.UITour.hideMenu('appMenu');
                 $tour.removeClass('in').addClass('compact');
                 $tour.attr('aria-expanded', false);
-                $('.ui-tour-list').fadeOut('fast');
-                $('.progress-step').fadeOut('fast');
-                $('.ui-tour-controls .prev').fadeOut();
-                $('.ui-tour-controls .close').fadeOut();
-                $('.ui-tour-controls .next').addClass('up').text(window.trans('open')).focus();
+                $tourList.fadeOut('fast');
+                $progress.fadeOut('fast');
+                $prevButton.fadeOut('fast');
+                $closeButton.fadeOut('fast');
+                $nextButton.addClass('up').text(window.trans('open')).focus();
                 $('button.up').one('click', Tour.expandTour);
                 $mask.fadeOut('slow', function () {
                     $body.removeClass('noscroll');
-                    $('.compact-title').html('<h2>' + title + '</h2>').fadeIn();
-                    $('.progress-step').addClass('compact').fadeIn();
+                    $compactTitle.html('<h2>' + title + '</h2>').fadeIn('fast');
+                    $progress.addClass('compact').fadeIn('fast');
                 });
             },
 
@@ -195,17 +206,16 @@
                 tourIsVisible = true;
                 $tour.removeClass('compact').addClass('in').focus();
                 $tour.attr('aria-expanded', true);
-                $('.compact-title').fadeOut('fast');
-                $('.progress-step').fadeOut('fast');
-                $('.ui-tour-controls .prev').fadeIn();
-                $('.ui-tour-controls .close').fadeIn();
-                $('.ui-tour-controls .up').removeClass('up').text(window.trans('next'));
-                $('button.close').one('click', Tour.compactTour).focus();
+                $compactTitle.fadeOut('fast');
+                $progress.fadeOut('fast');
+                $prevButton.fadeIn('fast');
+                $nextButton.removeClass('up').text(window.trans('next'));
+                $closeButton.fadeIn('fast').one('click', Tour.compactTour).focus();
                 $mask.fadeIn('slow', function () {
                     $body.addClass('noscroll');
-                    $('.ui-tour-list li.current .step-target').trigger('tour-step');
-                    $('.ui-tour-list').fadeIn();
-                    $('.progress-step').removeClass('compact').fadeIn();
+                    $tourList.find('li.current .step-target').trigger('tour-step');
+                    $tourList.fadeIn('slow');
+                    $progress.removeClass('compact').fadeIn('slow');
                 });
             },
 
@@ -214,7 +224,7 @@
              * Triggered when user presses the esc key
              */
             onKeyUp: function (e) {
-                var $current = $('.ui-tour-list li.current');
+                var $current = $tourList.find('li.current');
                 if (e.keyCode === 27 && tourIsVisible && !tourIsAnimating) {
                     if ($current.hasClass('last')) {
                         Tour.closeTour();
@@ -228,7 +238,12 @@
              * Starts the tour and animates the carousel up from bottom of viewport
              */
             startTour: function () {
-                $closeButton.one('click', Tour.compactTour);
+                // $closeButton.one('click', function () {
+                //     if (!tourIsAnimating) {
+                //         alert('here');
+                //         Tour.compactTour();
+                //     }
+                // });
 
                 Tour.updateControls();
 
@@ -238,10 +253,10 @@
                 tourHasStarted = true;
 
                 // fade out the inner mask messaging that's shown the the page loads
-                $('.mask-inner').addClass('out');
+                $mask.find('.mask-inner').addClass('out');
 
                 Mozilla.UITour.hideInfo();
-                $('.ui-tour-list li.current .step-target').trigger('tour-step');
+                $tourList.find('li.current .step-target').trigger('tour-step');
 
                 // toggle/close with escape key
                 $doc.on('keyup.ui-tour', Tour.onKeyUp);
@@ -262,7 +277,7 @@
              * again when the user returns to the tab.
              */
             handleVisibilityChange: function () {
-                var $current = $('.ui-tour-list li.current');
+                var $current = $tourList.find('li.current');
                 var step = $current.data('step');
 
                 if (document.hidden) {
@@ -273,8 +288,8 @@
                 } else {
                     if (tourIsVisible) {
                         $current.find('.step-target').delay(100).trigger('tour-step');
-                        $('.progress-step .step').text(step);
-                        $('.progress-step .progress').attr('aria-valuenow', step);
+                        $progress.find('.step').text(step);
+                        $progress.find('.progress').attr('aria-valuenow', step);
                         if ($current.hasClass('last')) {
                             Tour.rotateHighLights();
                         }
