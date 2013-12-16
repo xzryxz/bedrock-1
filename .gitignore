@@ -27,3 +27,5 @@ venv
 .vagrant
 *.db
 james.ini
+lib/sitemaps/json
+media/sitemaps
