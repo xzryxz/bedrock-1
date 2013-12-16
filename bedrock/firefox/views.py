@@ -14,7 +14,7 @@ from django.views.generic.base import TemplateView
 
 import basket
 from lib import l10n_utils
-from jingo_minify.helpers import BUILD_ID_JS, BUNDLE_HASHES
+from jingo_minify.helpers import BUILD_ID_JS, BUILD_ID_CSS, BUNDLE_HASHES
 from funfactory.urlresolvers import reverse
 
 
@@ -78,10 +78,32 @@ def get_js_bundle_files(bundle):
         items = ("js/%s-min.js?build=%s" % (bundle, build_id,),)
     return json.dumps([settings.MEDIA_URL + i for i in items])
 
+def get_css_bundle_files(bundle):
+    """
+    Return a JSON string of the list of file names for lazy loaded
+    CSS.
+    """
+    # mostly stolen from jingo_minify.helpers.js
+    if settings.DEBUG:
+        items = [item + ".css" for item in settings.MINIFY_BUNDLES['css'][bundle]]
+    else:
+        build_id = BUILD_ID_CSS
+        bundle_full = "css:%s" % bundle
+        if bundle_full in BUNDLE_HASHES:
+            build_id = BUNDLE_HASHES[bundle_full]
+        items = ("css/%s-min.css?build=%s" % (bundle, build_id,),)
+    return json.dumps([settings.MEDIA_URL + i for i in items])
+
+# bundles for partners
 
 JS_COMMON = get_js_bundle_files('partners_common')
 JS_MOBILE = get_js_bundle_files('partners_mobile')
 JS_DESKTOP = get_js_bundle_files('partners_desktop')
+
+# bundles for family prototype
+
+FAMILY_DESKTOP_JS = get_js_bundle_files('firefox_new')
+FAMILY_DESKTOP_CSS = get_css_bundle_files('firefox_new')
 
 
 def get_latest_version(product='firefox', channel='release'):
@@ -181,6 +203,15 @@ def firefox_partners(request):
     form_kwargs = {'interest_set': 'fx'}
 
     return process_partnership_form(request, 'firefox/partners/index.html', 'firefox.partners.index', template_vars, form_kwargs)
+
+
+def firefox_family(request):
+    template_vars = {
+        'desktop_js': FAMILY_DESKTOP_JS,
+        'desktop_css': FAMILY_DESKTOP_CSS,
+    }
+
+    return l10n_utils.render(request, 'firefox/family.html', template_vars)
 
 
 def releases_index(request):

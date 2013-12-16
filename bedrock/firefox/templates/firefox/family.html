@@ -1,0 +1,126 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% extends "firefox/base-resp.html" %}
+
+{% block page_title %}{{_('Firefox Family')}}{% endblock %}
+{% block page_desc %}{{_('Download Mozilla Firefox, a free Web browser. Firefox is created by a global non-profit dedicated to putting individuals in control online. Get Firefox today!')}}{% endblock %}
+{% block body_id %}firefox-family{% endblock %}
+
+{% block site_header_nav %}{% endblock %}
+{% block site_header_logo %}{% endblock %}
+
+{% block site_css %}
+  {{ css('firefox_family') }}
+{% endblock %}
+
+{% block extrahead %}
+  <script>
+    var product_details = {};
+    product_details.desktop = {
+      loaded: false,
+      url: '/firefox/new/',
+      js: {{ desktop_js|safe }},
+      css: {{ desktop_css|safe }}
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+<section id="family-content">
+  <div id="family-intro">
+    <header id="family-header" class="wrapper">
+      <h3><img id="family-logo" src="{{ media('/img/firefox/family/firefox-logo.png') }}"></h3>
+      <h1>Your life, your Firefox</h1>
+      <h2>Discover and explore the full potential of your life online</h2>
+    </header>
+
+    <ul id="family-portraits" class="family-links wrapper">
+      <li class="fx-android" data-product="android">
+        <a href="" class="product-link"><img src="{{ media('img/firefox/family/firefox-for-android.png') }}"></a>
+      </li>
+      <li class="fx-desktop" data-product="desktop">
+        <a href="" class="product-link"><img src="{{ media('img/firefox/family/firefox-for-desktop.png') }}"></a>
+      </li>
+      <li class="fx-os" data-product="os">
+        <a href="" class="product-link"><img src="{{ media('img/firefox/family/firefox-os.png') }}"></a>
+      </li>
+    </ul>
+
+    <div id="family-names-wrapper">
+      <a href="" id="nav-logo">
+        <img src="{{ media('img/firefox/family/nav-logo.png') }}">
+      </a>
+      <ul id="family-names" class="family-links wrapper">
+        <li class="fx-android" data-product="android">
+          <a href="" class="product-link">
+            <strong>Firefox</strong> for Android<span></span>
+          </a>
+        </li>
+        <li class="fx-desktop" data-product="desktop">
+          <a href="" class="product-link">
+            <strong>Firefox</strong> for Desktop<span></span>
+          </a>
+        </li>
+        <li class="fx-os" data-product="os">
+          <a href="" class="product-link"><strong>Firefox</strong> OS</a>
+        </li>
+        <div id="selected-arrow"></div>
+      </ul>
+    </div>
+  </div> <!-- /#family-intro -->
+
+  <section id="scene-android" class="product-scene">
+    <div class="wrapper">
+      <img class="logo" src="{{ media('/img/firefox/family/scene-logo.png') }}">
+      <header>
+        <h1>Fast,<br> smart, safe</h1>
+      </header>
+      <div class="cinemagram">
+        <img src="{{ media('/img/firefox/family/android-coffeecup.png') }}">
+      </div>
+    </div>
+  </section>
+
+  <section id="scene-desktop" class="product-scene">
+    <div class="wrapper">
+      <img class="logo" src="{{ media('/img/firefox/family/scene-logo.png') }}">
+      <header>
+        <h1>Fast, flexible, secure</h1>
+      </header>
+      <div class="cinemagram">
+        <div class="cinemagram-animation" id="cinemagram-desktop"></div>
+        <img src="{{ media('/img/firefox/family/desktop-coffeecup.png') }}">
+      </div>
+    </div>
+  </section>
+
+  <section id="scene-os" class="product-scene">
+    <div class="wrapper">
+      <img class="logo" src="{{ media('/img/firefox/family/scene-logo-os.png') }}">
+      <header>
+        <h1>Make every<br> moment count</h1>
+      </header>
+      <div class="cinemagram">
+        <img src="{{ media('/img/firefox/family/os-hand.png') }}">
+      </div>
+    </div>
+  </section>
+
+  <img src="{{ media('/img/firefox/family/os-fingers.png') }}" id="os-fingers">
+</section>
+
+<div id="product-wrapper"></div>
+
+{% endblock %}
+
+{% block email_form %}{% endblock %}
+
+{% block site_footer %}{% endblock %}
+
+{% block js %}
+  {{ js('common-resp') }}
+  {{ js('firefox_family') }}
+{% endblock %}

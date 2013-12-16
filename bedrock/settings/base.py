@@ -174,6 +174,9 @@ MINIFY_BUNDLES = {
             'css/sandstone/video.less',
             'css/firefox/customize.less',
         ),
+        'firefox_family': (
+            'css/firefox/family.less',
+        ),
         'firefox_features': (
             'css/sandstone/video.less',
             'css/firefox/features.less',
@@ -460,6 +463,10 @@ MINIFY_BUNDLES = {
         'firefox_customize': (
             'js/base/mozilla-video-tools.js',
             'js/firefox/customize.js',
+        ),
+        'firefox_family': (
+            'js/libs/jquery.spritely-0.6.1.js',
+            'js/firefox/family.js',
         ),
         'firefox_features': (
             'js/base/mozilla-video-tools.js',
