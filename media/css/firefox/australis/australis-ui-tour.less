@@ -126,6 +126,7 @@ body.noscroll {
             list-style-type: disc;
         }
         .tour-step {
+            display: none;
             position: absolute;
             left: 0;
             top: 0;
@@ -160,6 +161,9 @@ body.noscroll {
                 padding-bottom: @baseLine;
                 border-bottom: 1px solid #C7C7C7;
                 margin: @baseLine auto;
+            }
+            &.visible {
+                display: block;
             }
         }
     }

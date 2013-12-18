@@ -111,6 +111,8 @@
                     $progress.find('.step').text(step);
                     $progress.find('.progress').attr('aria-valuenow', step);
 
+                    $tourList.find('.tour-step').not('.current').removeClass('visible');
+
                     // hide menu panel when not needed as it's now sticky.
                     if (!$current.hasClass('app-menu')) {
                         Mozilla.UITour.hideMenu('appMenu');
@@ -139,14 +141,21 @@
                 }
                 var step = $(this).hasClass('prev') ? 'prev' : 'next';
                 var $current = $tourList.find('li.current');
+                $current.attr('aria-selected', false);
                 tourIsAnimating = true;
                 $('.ui-tour-controls button').attr('disabled', 'disabled');
                 if (step === 'prev') {
                     $current.removeClass('current next-out').addClass('prev-out');
-                    $current.prev().addClass('current');
+                    $current.prev().addClass('visible').attr('aria-selected', true);
+                    setTimeout(function () {
+                        $current.prev().addClass('current');
+                    }, 50);
                 } else if (step === 'next') {
                     $current.removeClass('current prev-out').addClass('next-out');
-                    $current.next().addClass('current');
+                    $current.next().addClass('visible').attr('aria-selected', true);
+                    setTimeout(function () {
+                        $current.next().addClass('current');
+                    }, 50);
                 }
             },
 
