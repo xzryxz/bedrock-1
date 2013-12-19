@@ -29,6 +29,14 @@
   data-done="{{ _('Done') }}"
   {# L10n: This is the label for a button that proceeds to the next step of the tour #}
   data-next="{{ _('Next') }}"
+  {# L10n: This is the label for a button that starts the tour #}
+  data-start="{{ _('Show me more!') }}"
+  {# L10n: This is the label for a button that delays starting the tour #}
+  data-later="{{ _('Not now') }}"
+  {# L10n: This is the title for a door-hanger menu that shows in the browser chrome #}
+  data-title="{{ _('Welcome to the new Firefox!') }}"
+  {# L10n: This is the text for a door-hanger menu that shows in the browser chrome #}
+  data-text="{{ _('Your Firefox menu has now moved here, more visual and easier to customize!') }}"
 {% endblock %}
 
 {% block content %}
@@ -52,7 +60,7 @@
       </div>
     </div>
     <ul id="tour-content" class="ui-tour-list">
-      <li class="tour-step current first app-menu visible" data-step="1" aria-selected="true">
+      <li class="tour-step current first app-menu visible" data-step="1">
         <div class="tour-item">
           <h2 class="tour-menu step-target" data-target="appMenu">
             {{ _('New Menu Panel for efficient browsing') }}
@@ -112,7 +120,7 @@
       </li>
     </ul>
     <div class="compact-title"></div>
-    <div class="tour-info tour-init tour-highlight" data-target="appMenu" data-title="{{ _('Wonder what this button does?') }}" data-text="{{ _('Click to see! Show me next time') }}" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
+    <div class="tour-init tour-highlight" data-target="appMenu" data-icon="{{ MEDIA_URL }}img/firefox/firstrun/australis-tour/logo.png"></div>
 
     <div class="ui-tour-controls" aria-controls="ui-tour tour-content tour-progress">
       <button class="step prev faded">{{ _('Previous') }}</button>

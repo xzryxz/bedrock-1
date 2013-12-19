@@ -4,130 +4,162 @@
 
 // create namespace
 if (typeof Mozilla == 'undefined') {
-	var Mozilla = {};
+    var Mozilla = {};
 }
 
 ;(function($) {
     'use strict';
 
-	// create namespace
-	if (typeof Mozilla.UITour == 'undefined') {
-		Mozilla.UITour = {};
-	}
+    // create namespace
+    if (typeof Mozilla.UITour == 'undefined') {
+        Mozilla.UITour = {};
+    }
 
-	var themeIntervalId = null;
-	function _stopCyclingThemes() {
-		if (themeIntervalId) {
-			clearInterval(themeIntervalId);
-			themeIntervalId = null;
-		}
-	}
+    var themeIntervalId = null;
+    function _stopCyclingThemes() {
+        if (themeIntervalId) {
+            clearInterval(themeIntervalId);
+            themeIntervalId = null;
+        }
+    }
 
+    function _sendEvent(action, data) {
+        var event = new CustomEvent('mozUITour', {
+            bubbles: true,
+            detail: {
+                action: action,
+                data: data || {}
+            }
+        });
 
-	function _sendEvent(action, data) {
-		var event = new CustomEvent('mozUITour', {
-			bubbles: true,
-			detail: {
-				action: action,
-				data: data || {}
-			}
-		});
-		console.log("Sending mozUITour event: ", event);
-		document.dispatchEvent(event);
-	}
+        document.dispatchEvent(event);
+    }
 
-	Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY = 10 * 1000;
+    function _generateCallbackID() {
+        return Math.random().toString(36).replace(/[^a-z]+/g, '');
+    }
 
-	Mozilla.UITour.showHighlight = function(target, effect) {
-		_sendEvent('showHighlight', {
-			target: target,
-			effect: effect
-		});
-	};
+    function _waitForCallback(callback) {
+        var id = _generateCallbackID();
 
-	Mozilla.UITour.hideHighlight = function() {
-		_sendEvent('hideHighlight');
-	};
+        function listener(event) {
+            if (typeof event.detail != "object")
+                return;
+            if (event.detail.callbackID != id)
+                return;
 
-	Mozilla.UITour.showInfo = function(target, title, text, icon) {
-		_sendEvent('showInfo', {
-			target: target,
-			title: title,
-			text: text,
-			icon: icon
-		});
-	};
+            document.removeEventListener("mozUITourResponse", listener);
+            callback(event.detail.data);
+        }
+        document.addEventListener("mozUITourResponse", listener);
 
-	Mozilla.UITour.hideInfo = function() {
-		_sendEvent('hideInfo');
-	};
+        return id;
+    }
 
-	Mozilla.UITour.previewTheme = function(theme) {
-		_stopCyclingThemes();
+    Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY = 10 * 1000;
 
-		_sendEvent('previewTheme', {
-			theme: JSON.stringify(theme)
-		});
-	};
+    Mozilla.UITour.showHighlight = function(target, effect) {
+        _sendEvent('showHighlight', {
+            target: target,
+            effect: effect
+        });
+    };
 
-	Mozilla.UITour.resetTheme = function() {
-		_stopCyclingThemes();
+    Mozilla.UITour.hideHighlight = function() {
+        _sendEvent('hideHighlight');
+    };
 
-		_sendEvent('resetTheme');
-	};
-
-	Mozilla.UITour.cycleThemes = function(themes, delay, callback) {
-		_stopCyclingThemes();
-
-		if (!delay) {
-			delay = Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY;
-		}
-
-		function nextTheme() {
-			var theme = themes.shift();
-			themes.push(theme);
-
-			_sendEvent('previewTheme', {
-				theme: JSON.stringify(theme),
-				state: true
-			});
-
-			callback(theme);
-		}
-
-		themeIntervalId = setInterval(nextTheme, delay);
-		nextTheme();
-	};
-
-	Mozilla.UITour.addPinnedTab = function() {
-		_sendEvent('addPinnedTab');
-	};
-
-	Mozilla.UITour.removePinnedTab = function() {
-		_sendEvent('removePinnedTab');
-	};
-
-	Mozilla.UITour.showMenu = function(name) {
-		_sendEvent('showMenu', {
-			name: name
-		});
-	};
-
-        Mozilla.UITour.hideMenu = function(name) {
-                _sendEvent('hideMenu', {
-                        name: name
+    Mozilla.UITour.showInfo = function(target, title, text, icon, buttons) {
+        var buttonData = [];
+        if (Array.isArray(buttons)) {
+            for (var i = 0; i < buttons.length; i++) {
+                buttonData.push({
+                    label: buttons[i].label,
+                    icon: buttons[i].icon,
+                    callbackID: _waitForCallback(buttons[i].callback)
                 });
-        };
+            }
+        }
 
-	Mozilla.UITour.startUrlbarCapture = function(text, url) {
-		_sendEvent('startUrlbarCapture', {
-			text: text,
-			url: url
-		});
-	};
+        _sendEvent('showInfo', {
+            target: target,
+            title: title,
+            text: text,
+            icon: icon,
+            buttons: buttonData
+        });
+    };
 
-	Mozilla.UITour.endUrlbarCapture = function() {
-		_sendEvent('endUrlbarCapture');
-	};
+    Mozilla.UITour.hideInfo = function() {
+        _sendEvent('hideInfo');
+    };
+
+    Mozilla.UITour.previewTheme = function(theme) {
+        _stopCyclingThemes();
+
+        _sendEvent('previewTheme', {
+            theme: JSON.stringify(theme)
+        });
+    };
+
+    Mozilla.UITour.resetTheme = function() {
+        _stopCyclingThemes();
+
+        _sendEvent('resetTheme');
+    };
+
+    Mozilla.UITour.cycleThemes = function(themes, delay, callback) {
+        _stopCyclingThemes();
+
+        if (!delay) {
+            delay = Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY;
+        }
+
+        function nextTheme() {
+            var theme = themes.shift();
+            themes.push(theme);
+
+            _sendEvent('previewTheme', {
+                theme: JSON.stringify(theme),
+                state: true
+            });
+
+            callback(theme);
+        }
+
+        themeIntervalId = setInterval(nextTheme, delay);
+        nextTheme();
+    };
+
+    Mozilla.UITour.addPinnedTab = function() {
+        _sendEvent('addPinnedTab');
+    };
+
+    Mozilla.UITour.removePinnedTab = function() {
+        _sendEvent('removePinnedTab');
+    };
+
+    Mozilla.UITour.showMenu = function(name) {
+        _sendEvent('showMenu', {
+            name: name
+        });
+    };
+
+    Mozilla.UITour.hideMenu = function(name) {
+        _sendEvent('hideMenu', {
+            name: name
+        });
+    };
+
+    Mozilla.UITour.startUrlbarCapture = function(text, url) {
+        _sendEvent('startUrlbarCapture', {
+            text: text,
+            url: url
+        });
+    };
+
+    Mozilla.UITour.endUrlbarCapture = function() {
+        _sendEvent('endUrlbarCapture');
+    };
 
 })();

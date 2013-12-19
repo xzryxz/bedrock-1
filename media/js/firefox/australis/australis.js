@@ -30,8 +30,26 @@
                     Mozilla.UITour.showHighlight(this.dataset.target);
                 });
 
-                $('.tour-info').on('tour-step', function () {
-                    Mozilla.UITour.showInfo(this.dataset.target, this.dataset.title, this.dataset.text);
+                function callbackLearnMore () {
+                    console.log('learn more');
+                }
+
+                function callbackLater () {
+                    console.log('later');
+                }
+
+                $('.tour-init').on('tour-step', function () {
+                    var buttons = [
+                        {label: window.trans('start'), callback: callbackLearnMore},
+                        {label: window.trans('later'), callback: callbackLater}
+                    ];
+                    Mozilla.UITour.showInfo(
+                        this.dataset.target,
+                        window.trans('title'),
+                        window.trans('text'),
+                        null,
+                        buttons
+                    );
                 });
 
                 $('.tour-menu').on('tour-step', function () {
@@ -141,18 +159,17 @@
                 }
                 var step = $(this).hasClass('prev') ? 'prev' : 'next';
                 var $current = $tourList.find('li.current');
-                $current.attr('aria-selected', false);
                 tourIsAnimating = true;
                 $('.ui-tour-controls button').attr('disabled', 'disabled');
                 if (step === 'prev') {
                     $current.removeClass('current next-out').addClass('prev-out');
-                    $current.prev().addClass('visible').attr('aria-selected', true);
+                    $current.prev().addClass('visible');
                     setTimeout(function () {
                         $current.prev().addClass('current');
                     }, 50);
                 } else if (step === 'next') {
                     $current.removeClass('current prev-out').addClass('next-out');
-                    $current.next().addClass('visible').attr('aria-selected', true);
+                    $current.next().addClass('visible');
                     setTimeout(function () {
                         $current.next().addClass('current');
                     }, 50);
